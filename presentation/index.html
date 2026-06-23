@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Myco House — Investor Vision 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200;300;400;600&family=Work+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Noto+Sans+TC:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  /* ── Thryve Brand Tokens ── */
+  :root {
+    --orange:   #d96030;
+    --green:    #1d4c40;
+    --cream:    #efead3;
+    --black:    #231815;
+    --warm-mid: #5a4535;
+    --warm-lt:  #9c8a78;
+    --sand:     #d4c8b0;
+    --rule:     rgba(217,96,48,0.25);
+    --green-lt: rgba(29,76,64,0.08);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Work Sans', 'Noto Sans TC', sans-serif;
+    background: var(--cream);
+    color: var(--black);
+    overflow: hidden;
+    height: 100vh; width: 100vw;
+  }
+
+  .deck { width:100%; height:100%; position:relative; }
+
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    padding: 52px 76px;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity .6s ease, transform .6s ease;
+    pointer-events: none;
+    background: var(--cream);
+  }
+  .slide.active { opacity:1; transform:translateY(0); pointer-events:all; }
+
+  /* ── Nav ── */
+  .nav {
+    position: fixed; bottom: 28px; left:50%; transform:translateX(-50%);
+    display:flex; align-items:center; gap:16px; z-index:100;
+  }
+  .dot { width:5px; height:5px; border-radius:50%; background:var(--sand); cursor:pointer; transition:all .3s; }
+  .dot.on { background:var(--orange); width:18px; border-radius:2.5px; }
+  .nbtn { background:none; border:none; color:var(--warm-lt); font:500 11px/1 'Work Sans',sans-serif; letter-spacing:2px; text-transform:uppercase; cursor:pointer; transition:color .3s; }
+  .nbtn:hover { color:var(--orange); }
+  .snum { position:fixed; top:28px; right:42px; font:300 10px/1 'Work Sans',sans-serif; letter-spacing:3px; color:var(--sand); }
+
+  /* ── Type ── */
+  .eye {
+    font: 500 10px/1 'Unbounded', sans-serif;
+    letter-spacing: 4px; text-transform:uppercase;
+    color: var(--orange); margin-bottom: 16px;
+  }
+  h1 {
+    font: 300 clamp(32px,4.2vw,58px)/1.12 'Unbounded', sans-serif;
+    color: var(--cream); text-align:center;
+  }
+  h2 {
+    font: 300 clamp(24px,2.8vw,40px)/1.2 'Unbounded', sans-serif;
+    color: var(--black);
+  }
+  .bar   { width:40px; height:2px; background:var(--orange); margin:20px auto; }
+  .bar-l { width:40px; height:2px; background:var(--orange); margin:20px 0; }
+  p, li  { font:300 clamp(13px,1.35vw,15px)/1.9 'Work Sans','Noto Sans TC',sans-serif; color:var(--warm-mid); }
+  strong { color:var(--black); font-weight:500; }
+  em     { font-style:italic; color:var(--warm-lt); }
+
+  /* ── Layout ── */
+  .w    { width:100%; max-width:1100px; }
+  .col2 { display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:start; }
+  .col3 { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  .col4 { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+
+  /* ── Cards ── */
+  .card    { padding:28px 26px; border:1px solid var(--rule); background:rgba(239,234,211,0.6); }
+  .card-dk { padding:28px 26px; background:var(--green); }
+  .card-dk p { color:rgba(239,234,211,0.75); }
+  .card-or { padding:28px 26px; background:var(--orange); }
+  .card-or p, .card-or li { color:rgba(239,234,211,0.9); }
+
+  /* ── Lists ── */
+  .tl { list-style:none; }
+  .tl li { padding:9px 0; border-bottom:1px solid var(--rule); display:flex; gap:11px; }
+  .tl li::before { content:'—'; color:var(--orange); flex-shrink:0; }
+
+  /* ── Stats ── */
+  .big { font:200 clamp(40px,5vw,68px)/1 'Unbounded',sans-serif; color:var(--black); margin-bottom:5px; }
+  .sub { font:500 9px/1 'Work Sans',sans-serif; letter-spacing:3px; text-transform:uppercase; color:var(--warm-lt); }
+
+  /* ── Quotes ── */
+  .q      { font:300 italic clamp(17px,2vw,26px)/1.6 'Work Sans',sans-serif; color:var(--black); text-align:center; max-width:780px; }
+  .q-attr { font:500 10px/1 'Work Sans',sans-serif; letter-spacing:3px; text-transform:uppercase; color:var(--warm-lt); margin-top:18px; text-align:center; }
+
+  /* ── Vbox ── */
+  .vbox { border-left:3px solid var(--orange); padding:18px 22px; background:var(--green-lt); }
+  .vbox p { color:var(--black); font-size:clamp(13px,1.4vw,15px); line-height:1.85; }
+
+  /* ── Photo grids ── */
+  .photo-grid-2x3 {
+    display:grid; grid-template-columns:repeat(3,1fr);
+    grid-template-rows:repeat(2,1fr);
+    gap:6px; width:100%; max-width:1100px;
+    height: calc(100vh - 180px);
+  }
+  .photo-grid-2x3 .ph {
+    overflow:hidden; position:relative;
+  }
+  .photo-grid-2x3 .ph img {
+    width:100%; height:100%; object-fit:cover; display:block;
+    transition: transform .4s ease;
+  }
+  .photo-grid-2x3 .ph img:hover { transform:scale(1.03); }
+
+  /* ── Timeline ── */
+  .tline { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--rule); width:100%; max-width:1100px; margin-top:36px; }
+  .ti    { background:var(--cream); padding:24px 20px; border-top:2px solid transparent; }
+  .ti.hi { border-top-color:var(--orange); }
+  .ti-ph { font:600 9px/1 'Unbounded',sans-serif; letter-spacing:3px; text-transform:uppercase; color:var(--orange); display:block; margin-bottom:10px; }
+  .ti h4 { font:300 15px/1.3 'Unbounded',sans-serif; color:var(--black); margin-bottom:12px; }
+  .ti ul { list-style:none; }
+  .ti li { font:300 12px/1.6 'Work Sans',sans-serif; color:var(--warm-lt); padding:3px 0; display:flex; gap:7px; }
+  .ti li::before { content:'·'; color:var(--orange); }
+
+  /* ── Budget table ── */
+  .rt { width:100%; border-collapse:collapse; }
+  .rt th { font:600 9px/1 'Work Sans',sans-serif; letter-spacing:3px; text-transform:uppercase; color:var(--warm-lt); padding:9px 13px; text-align:left; border-bottom:1px solid var(--rule); }
+  .rt td { padding:12px 13px; border-bottom:1px solid rgba(217,96,48,.08); font:300 13px/1 'Work Sans','Noto Sans TC',sans-serif; color:var(--warm-mid); }
+  .rt td:last-child { text-align:right; color:var(--black); }
+  .rt tr.tot td { border-top:1px solid var(--sand); color:var(--black); font-size:14px; padding-top:16px; font-weight:500; }
+  .rt tr.tot td:last-child { color:var(--orange); font-size:20px; font-family:'Unbounded',sans-serif; font-weight:300; }
+
+  /* ── Pill ── */
+  .pill { display:inline-block; padding:3px 10px; border:1px solid var(--orange); font:500 9px/1.6 'Work Sans',sans-serif; letter-spacing:2px; text-transform:uppercase; color:var(--orange); }
+
+  /* ── DARK (green) slides ── */
+  #s1, #s13 { background:var(--green); }
+  #s1 h1, #s13 h2 { color:var(--cream); }
+  #s1 p, #s13 p   { color:rgba(239,234,211,.7); }
+  #s1 .eye, #s13 .eye { color:var(--orange); }
+  #s1::before {
+    content:''; position:absolute; inset:0;
+    background: radial-gradient(ellipse at 65% 35%, rgba(217,96,48,.18) 0%, transparent 55%),
+                radial-gradient(ellipse at 15% 80%, rgba(239,234,211,.06) 0%, transparent 50%);
+  }
+  #s1 .w { position:relative; z-index:1; }
+  #s1 .sub-title { font:300 clamp(13px,1.6vw,18px)/1.5 'Work Sans','Noto Sans TC',sans-serif; color:rgba(239,234,211,.65); letter-spacing:.5px; max-width:600px; margin:0 auto; }
+  .badge-row { display:flex; gap:18px; margin-top:36px; flex-wrap:wrap; justify-content:center; }
+  .badge { border:1px solid rgba(217,96,48,.4); padding:9px 16px; font:500 9px/1.7 'Work Sans',sans-serif; letter-spacing:2px; text-transform:uppercase; color:var(--orange); text-align:center; }
+
+  /* ── BEFORE slide ── */
+  #s6 { padding:36px 48px 52px; background:var(--black); }
+  #s6 .slide-label { font:600 10px/1 'Unbounded',sans-serif; letter-spacing:5px; text-transform:uppercase; color:var(--warm-lt); margin-bottom:10px; display:block; }
+  #s6 h2 { color:var(--cream); font-size:clamp(22px,2.5vw,34px); margin-bottom:24px; }
+
+  /* ── AFTER slide ── */
+  #s7 { padding:36px 48px 52px; background:var(--green); }
+  #s7 .slide-label { font:600 10px/1 'Unbounded',sans-serif; letter-spacing:5px; text-transform:uppercase; color:var(--orange); margin-bottom:10px; display:block; }
+  #s7 h2 { color:var(--cream); font-size:clamp(22px,2.5vw,34px); margin-bottom:24px; }
+
+  /* ── Philosophy closing ── */
+  .philosophy-grid {
+    display:grid; grid-template-columns:repeat(5,1fr); gap:2px;
+    width:100%; max-width:1000px; margin-top:40px;
+  }
+  .ph-item {
+    background:rgba(239,234,211,.07);
+    padding:32px 18px; text-align:center;
+    border-top:2px solid rgba(217,96,48,.4);
+    transition:border-color .3s;
+  }
+  .ph-item:hover { border-top-color:var(--orange); }
+  .ph-num  { font:200 11px/1 'Unbounded',sans-serif; letter-spacing:2px; color:rgba(217,96,48,.6); display:block; margin-bottom:12px; }
+  .ph-en   { font:300 18px/1.2 'Unbounded',sans-serif; color:var(--cream); display:block; margin-bottom:6px; }
+  .ph-zh   { font:300 12px/1 'Noto Sans TC',sans-serif; color:rgba(239,234,211,.55); display:block; margin-bottom:12px; }
+  .ph-desc { font:300 11px/1.7 'Work Sans','Noto Sans TC',sans-serif; color:rgba(239,234,211,.45); }
+
+  /* ── Print: force background colors ── */
+  @media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    body { overflow: visible; height: auto; }
+    .deck { height: auto; position: static; }
+    .slide {
+      position: relative !important; opacity: 1 !important; transform: none !important;
+      pointer-events: auto !important; display: flex !important;
+      height: 100vh; overflow: hidden; page-break-after: always; break-after: page;
+    }
+    .nav, .snum { display: none !important; }
+  }
+
+  /* ── Tablet ≤ 1024px ── */
+  @media (max-width: 1024px) {
+    .col3 { grid-template-columns: 1fr 1fr; }
+    .col4 { grid-template-columns: 1fr 1fr; }
+    .philosophy-grid { grid-template-columns: repeat(3, 1fr); }
+    .tline { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ── Mobile ≤ 640px ── */
+  @media (max-width: 640px) {
+    .slide {
+      padding: 52px 18px 80px;
+      overflow-y: auto; -webkit-overflow-scrolling: touch;
+      justify-content: flex-start;
+    }
+    .w { max-width: 100%; }
+    h1 { font-size: clamp(22px, 7vw, 36px); }
+    h2 { font-size: clamp(17px, 5.5vw, 28px); }
+    .col2 { grid-template-columns: 1fr; gap: 20px; }
+    .col3 { grid-template-columns: 1fr; gap: 12px; }
+    .col4 { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .card, .card-dk, .card-or { padding: 20px 16px; }
+    .big { font-size: clamp(30px, 9vw, 48px); }
+    .q { font-size: clamp(15px, 4.5vw, 20px); }
+    .badge-row { margin-top: 22px; gap: 10px; }
+    .badge { padding: 8px 12px; font-size: 8px; }
+    .philosophy-grid { grid-template-columns: repeat(2, 1fr); gap: 2px; margin-top: 24px; }
+    .ph-item { padding: 22px 12px; }
+    .tline { grid-template-columns: 1fr 1fr; }
+    .ti { padding: 18px 14px; }
+    .photo-grid-2x3 {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: repeat(3, 1fr);
+      height: calc(100vh - 140px);
+    }
+    #s6, #s7 { padding: 36px 16px 52px; }
+    #s6 h2, #s7 h2 { font-size: clamp(16px, 5vw, 24px); margin-bottom: 16px; }
+    .rt th { font-size: 8px; padding: 7px 8px; }
+    .rt td { font-size: 11px; padding: 10px 8px; }
+    .rt tr.tot td:last-child { font-size: 16px; }
+    .vbox { padding: 14px 16px; }
+    .bar, .bar-l { margin: 14px auto; }
+    .bar-l { margin: 14px 0; }
+    .snum { top: 14px; right: 16px; }
+    .nav { bottom: 14px; gap: 10px; }
+    .nbtn { font-size: 10px; letter-spacing: 1px; }
+  }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- 01 HERO -->
+  <div class="slide active" id="s1">
+    <div class="w" style="text-align:center">
+      <div class="eye">Myco House · 2026</div>
+      <h1>全球第一個<br>Antrodia Wellness Speakeasy</h1>
+      <div class="bar"></div>
+      <p class="sub-title">The world's most energy-rich hidden wellness club,<br>born from Taiwan's oldest forest medicine.</p>
+      <div class="badge-row">
+        <div class="badge">2024 巴黎奧運<br>台灣館指定伴手禮</div>
+        <div class="badge">2023 國家品牌<br>玉山獎最佳產品</div>
+        <div class="badge">深耕霧峰<br>20+ 年</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 MACRO WAVE -->
+  <div class="slide" id="s2">
+    <div class="w">
+      <div class="eye">The Macro Wave</div>
+      <h2>有史以來最大的消費者轉型<br>正在發生</h2>
+      <div class="bar-l"></div>
+      <div class="col2">
+        <div>
+          <div style="margin-bottom:24px;"><div class="big">$6.3T</div><div class="sub">全球 Wellness 市場規模 2023</div></div>
+          <div style="margin-bottom:24px;"><div class="big">+9.9%</div><div class="sub">預測年均成長率至 2028</div></div>
+          <div><div class="big">Zero</div><div class="sub">台灣現有的國際級 Wellness Club</div></div>
+        </div>
+        <div style="padding-top:4px;">
+          <p style="margin-bottom:18px;">這不是「養生潮流」——這是一場重新定義奢華的結構性轉變：</p>
+          <ul class="tl">
+            <li>高淨值族群從「物件收藏」轉向「身體資本管理」</li>
+            <li>長壽（Longevity）成為繼財富管理後的新型精英身份符號</li>
+            <li>私人預約制、隱密性、儀式感 — Speakeasy 模式供不應求</li>
+            <li>東方草本從替代醫學進入主流 Wellness 敘事</li>
+          </ul>
+          <div class="vbox" style="margin-top:22px;">
+            <p style="font-style:italic;">Tatler Wellness、Vogue Asia、Bloomberg Longevity<br>正在全球尋找下一個值得報導的 Wellness 場域</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 THE GAP -->
+  <div class="slide" id="s3">
+    <div class="w" style="text-align:center; max-width:900px;">
+      <div class="eye">The Gap</div>
+      <div class="q">Gua sha 已登上 Vogue。抹茶已成 status symbol。<br>下一個被全球高端 Wellness 接受的東方元素，會是什麼？</div>
+      <div class="bar"></div>
+      <div class="col3" style="text-align:left; margin-top:0;">
+        <div class="card">
+          <div class="eye" style="margin-bottom:12px;">已被接受</div>
+          <ul class="tl"><li>抹茶 Matcha</li><li>薑黃 Turmeric</li><li>人參 Ginseng</li><li>靈芝 Reishi</li></ul>
+        </div>
+        <div class="card" style="border-top:2px solid var(--orange);">
+          <div class="eye" style="margin-bottom:12px;">等待被發現</div>
+          <ul class="tl">
+            <li><strong>牛樟芝 Antrodia</strong> — 台灣特有種</li>
+            <li>只能寄生在台灣特有牛樟樹上</li>
+            <li>全球唯一原產地：台灣深山</li>
+            <li>稀有程度超越冬蟲夏草</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="eye" style="margin-bottom:12px;">為什麼現在</div>
+          <ul class="tl">
+            <li>Longevity 社群積極尋找新的東方靈芝類</li>
+            <li>台灣科研數據已支撐健康主張</li>
+            <li>先行者佔據「原產地」品牌敘事</li>
+            <li>我們已擁有原材料、技術、土地</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 04 UNFAIR ADVANTAGE -->
+  <div class="slide" id="s4">
+    <div class="w">
+      <div class="eye">Our Unfair Advantage</div>
+      <h2>20 年的護城河<br>別人無法複製</h2>
+      <div class="bar-l"></div>
+      <div class="col2">
+        <div>
+          <ul class="tl" style="margin-bottom:24px;">
+            <li><strong>台灣最大</strong>實木種植牛樟芝復育園，20+ 年深耕霧峰</li>
+            <li><strong>原材料自主</strong> — 牛樟原木、段木，自有土地</li>
+            <li><strong>科研背書</strong> — 多項衛福部核准健康食品認證在途</li>
+            <li><strong>國際認證</strong> — 巴黎奧運台灣館指定禮品、玉山獎</li>
+            <li><strong>新建物已就緒</strong> — 85.45 坪，去年落成，待軟裝啟動</li>
+          </ul>
+          <div class="vbox">
+            <p>"我們不是在建立品牌後找空間。<br>我們是 <strong>20 年的珍稀原材料護城河</strong>，<br>現在把它變成一個場域。"</p>
+          </div>
+        </div>
+        <div>
+          <div class="card-dk" style="margin-bottom:16px;">
+            <div class="eye" style="margin-bottom:14px;">競爭者需要多久才能複製</div>
+            <div style="margin-bottom:18px;"><span style="font:200 36px/1 'Unbounded',sans-serif; color:var(--orange);">20 yr</span><br><span class="sub" style="margin-top:6px; display:block;">原材料種植週期</span></div>
+            <div style="height:1px; background:rgba(239,234,211,.12); margin-bottom:18px;"></div>
+            <div><span style="font:200 36px/1 'Unbounded',sans-serif; color:var(--orange);">∞</span><br><span class="sub" style="margin-top:6px; display:block;">牛樟樹是台灣保育類，無法新種</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 05 THE VISION -->
+  <div class="slide" id="s5">
+    <div class="w" style="text-align:center; max-width:880px;">
+      <div class="eye">The Vision</div>
+      <h2>不是展示空間。<br>是台灣第一個能量型 Wellness Speakeasy。</h2>
+      <div class="bar"></div>
+      <p style="max-width:580px; margin:0 auto 36px; font-size:clamp(14px,1.5vw,17px);">
+        把「難找難到的偏遠地」轉化為品牌資產。<br>
+        <strong>隱密、私人預約制、儀式感</strong>——這正是 Speakeasy 的本質。
+      </p>
+      <div class="col4">
+        <div class="card" style="text-align:center; padding:24px 14px;">
+          <div style="font-size:22px; margin-bottom:10px;">🪵</div>
+          <div class="eye" style="margin-bottom:6px; font-size:9px;">Wood</div>
+          <p style="font-size:12px;">牛樟木天雕<br>儀式主體</p>
+        </div>
+        <div class="card" style="text-align:center; padding:24px 14px;">
+          <div style="font-size:22px; margin-bottom:10px;">🪨</div>
+          <div class="eye" style="margin-bottom:6px; font-size:9px;">Stone</div>
+          <p style="font-size:12px;">木化石礦石<br>能量錨點</p>
+        </div>
+        <div class="card" style="text-align:center; padding:24px 14px;">
+          <div style="font-size:22px; margin-bottom:10px;">🍄</div>
+          <div class="eye" style="margin-bottom:6px; font-size:9px;">Fungi</div>
+          <p style="font-size:12px;">牛樟芝<br>時間與再生</p>
+        </div>
+        <div class="card" style="text-align:center; padding:24px 14px;">
+          <div style="font-size:22px; margin-bottom:10px;">💧</div>
+          <div class="eye" style="margin-bottom:6px; font-size:9px;">Water</div>
+          <p style="font-size:12px;">魚池倒影<br>空間呼吸感</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 06 BEFORE -->
+  <div class="slide" id="s6">
+    <span class="slide-label">Before · 現況</span>
+    <h2>這是現在的樣子</h2>
+    <div class="photo-grid-2x3">
+      <div class="ph"><img src="assets/before/b4.jpg" alt="before 1"></div>
+      <div class="ph"><img src="assets/before/b5.jpg" alt="before 2"></div>
+      <div class="ph"><img src="assets/before/b6.jpg" alt="before 3"></div>
+      <div class="ph"><img src="assets/before/b1.jpg" alt="before 4"></div>
+      <div class="ph"><img src="assets/before/b2.jpg" alt="before 5"></div>
+      <div class="ph"><img src="assets/before/b3.jpg" alt="before 6"></div>
+    </div>
+  </div>
+
+  <!-- 07 AFTER -->
+  <div class="slide" id="s7">
+    <span class="slide-label">After · 目標場域</span>
+    <h2>這是我們要去的地方</h2>
+    <div class="photo-grid-2x3">
+      <div class="ph"><img src="assets/after/a1.png" alt="after 1"></div>
+      <div class="ph"><img src="assets/after/a2.png" alt="after 2"></div>
+      <div class="ph"><img src="assets/after/a3.png" alt="after 3"></div>
+      <div class="ph"><img src="assets/after/a4.png" alt="after 4"></div>
+      <div class="ph"><img src="assets/after/a5.png" alt="after 5"></div>
+      <div class="ph"><img src="assets/after/a6.png" alt="after 6"></div>
+    </div>
+  </div>
+
+  <!-- 08 TRANSFORMATION -->
+  <div class="slide" id="s8">
+    <div class="w">
+      <div class="eye">The Transformation</div>
+      <h2>NT$300,000 買到的<br>不是裝潢，是定位</h2>
+      <div class="bar-l"></div>
+      <div class="col2" style="margin-top:28px;">
+        <div>
+          <div class="card" style="border-top:2px solid var(--sand); margin-bottom:16px;">
+            <div class="eye" style="font-size:9px; margin-bottom:12px; color:var(--warm-lt);">現在</div>
+            <ul class="tl">
+              <li>辦公室感 — 訪客感受不到品牌能量</li>
+              <li>B 級觀光工廠，缺乏拍照動力</li>
+              <li>媒體無從報導（沒有視覺故事）</li>
+              <li>產品跟空間說的是不同的語言</li>
+            </ul>
+          </div>
+          <div style="text-align:center; padding:8px 0; font:500 10px/1 'Work Sans',sans-serif; letter-spacing:3px; text-transform:uppercase; color:var(--orange);">— NT$300,000 軟裝升級 →</div>
+          <div class="card" style="border-top:2px solid var(--orange); margin-top:16px;">
+            <div class="eye" style="font-size:9px; margin-bottom:12px;">之後</div>
+            <ul class="tl">
+              <li>Tatler / Vogue Asia 可以報導的場域</li>
+              <li>Instagram 自發性傳播，每次到訪都有人拍</li>
+              <li>企業 B2B 包場，每場 NT$50,000+ 可行</li>
+              <li>空間就是最強的產品代言</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="eye" style="font-size:9px; margin-bottom:14px;">為什麼 NT$300,000 可以做到</div>
+          <p style="margin-bottom:18px;">空間有三個不可替代的原始資產，軟裝的工作是<strong>釋放它們的價值</strong>：</p>
+          <ul class="tl">
+            <li><strong>現有牛樟木天雕</strong> — 世界上無法在 1688 買到的 hero piece</li>
+            <li><strong>現有漂流木、木化石</strong> — 揭開黑布、油擦一遍，立刻變頂級 sculpture</li>
+            <li><strong>現有百子藥櫃</strong> — 本身就是 Vitality Bar 的最佳故事載體</li>
+          </ul>
+          <p style="margin-top:20px; font-size:12px; color:var(--warm-lt); font-style:italic;">
+            這三件物件在任何設計公司的提案裡都值數十萬——你已經擁有它們了。
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 09 REVENUE MODEL -->
+  <div class="slide" id="s9">
+    <div class="w">
+      <div class="eye">Revenue Model</div>
+      <h2>場域即媒體<br>空間是最划算的行銷預算</h2>
+      <div class="bar-l"></div>
+      <div class="col3" style="margin-top:28px;">
+        <div class="card">
+          <div class="eye" style="font-size:9px; margin-bottom:12px;">Stream 1 · 企業包場</div>
+          <div class="big" style="font-size:30px;">NT$50K<span style="font-size:14px; color:var(--warm-lt);">/場</span></div>
+          <div class="sub" style="margin-bottom:14px;">20–40 人 · 2 小時體驗</div>
+          <ul class="tl"><li>導覽 + 牛樟芝品飲</li><li>Vitality Bar 體驗</li><li>產品禮盒帶回</li></ul>
+        </div>
+        <div class="card" style="border-top:2px solid var(--orange);">
+          <div class="eye" style="font-size:9px; margin-bottom:12px;">Stream 2 · 媒體品牌合作</div>
+          <div style="font:200 28px/1 'Unbounded',sans-serif; color:var(--black); margin-bottom:5px;">∞</div>
+          <div class="sub" style="margin-bottom:14px;">媒體報導 = 免費廣告</div>
+          <ul class="tl"><li>Tatler / Vogue Asia 特輯</li><li>海外 Longevity KOL 造訪</li><li>Instagram UGC 自動擴散</li></ul>
+        </div>
+        <div class="card">
+          <div class="eye" style="font-size:9px; margin-bottom:12px;">Stream 3 · 產品銷售</div>
+          <div style="font:300 28px/1 'Unbounded',sans-serif; color:var(--black); margin-bottom:5px;">Direct</div>
+          <div class="sub" style="margin-bottom:14px;">體驗 → 購買</div>
+          <ul class="tl"><li>空間體驗是最強的試用</li><li>到訪者轉化率遠高於電商</li><li>海外通路對接 Wellness 零售</li></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10 THE ASK -->
+  <div class="slide" id="s10">
+    <div class="w" style="max-width:900px;">
+      <div class="eye">The Ask</div>
+      <h2>NT$300,000<br><span style="font-size:.52em; color:var(--warm-lt); font-weight:300;">軟裝啟動預算，不是全部改裝</span></h2>
+      <div class="bar-l"></div>
+      <div class="col2" style="margin-top:24px; gap:40px;">
+        <table class="rt">
+          <thead><tr><th>項目</th><th>說明</th><th>預算</th></tr></thead>
+          <tbody>
+            <tr><td><strong>燈光</strong></td><td>充電桌燈、上照燈、和紙燈、LED 燈條</td><td>NT$42,000</td></tr>
+            <tr><td><strong>窗簾+霧化膜</strong></td><td>白色落地紗簾全窗、玻璃門漸層霧化</td><td>NT$31,000</td></tr>
+            <tr><td><strong>地毯</strong></td><td>天然麻料大型地毯 × 3 張</td><td>NT$26,000</td></tr>
+            <tr><td><strong>植栽</strong></td><td>仿真橄欖樹 × 6（台灣採購）</td><td>NT$30,000</td></tr>
+            <tr><td><strong>畫作+展示</strong></td><td>抽象畫 + 玻璃展示架</td><td>NT$35,000</td></tr>
+            <tr><td><strong>擺件+香氛</strong></td><td>蠟燭、石材托盤、香氛機</td><td>NT$13,000</td></tr>
+            <tr><td><strong>彈性預留</strong></td><td>升級品項 / 追加</td><td>NT$43,000</td></tr>
+            <tr class="tot"><td colspan="2"><strong>Phase 1 合計</strong></td><td>NT$220,000</td></tr>
+          </tbody>
+        </table>
+        <div>
+          <p style="margin-bottom:16px;"><span class="pill">Phase 1 完成後</span></p>
+          <ul class="tl" style="margin-bottom:22px;">
+            <li>立即可接待媒體與企業參訪</li>
+            <li>Instagram 打卡場景就位</li>
+            <li>Vitality Bar 可對外營業</li>
+          </ul>
+          <p style="margin-bottom:10px;"><span class="pill">Phase 2 視效益追加（另計）</span></p>
+          <ul class="tl">
+            <li>黑色軌道燈施工 NT$60K–120K</li>
+            <li>樓梯間接燈 NT$15K–30K</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11 TIMELINE -->
+  <div class="slide" id="s11">
+    <div style="width:100%; max-width:1100px;">
+      <div class="eye">From Here to Open</div>
+      <h2>8 週後，場域就緒</h2>
+      <div class="bar-l"></div>
+      <div class="tline">
+        <div class="ti hi"><span class="ti-ph">即刻 · Week 1</span><h4>零成本啟動</h4><ul><li>揭開黑布，椰子油擦漂流木</li><li>移除多餘小件木雕</li><li>1688 採購清單送出</li><li>仿真橄欖樹詢價</li></ul></div>
+        <div class="ti hi"><span class="ti-ph">Week 2–3</span><h4>光線轉型</h4><ul><li>白色紗簾全窗安裝</li><li>玻璃門霧化膜施作</li><li>桌燈、上照燈、和紙燈就位</li><li>LED 燈條裝木件內</li></ul></div>
+        <div class="ti"><span class="ti-ph">Week 4–5</span><h4>空間成型</h4><ul><li>麻料地毯鋪設</li><li>橄欖樹進場</li><li>玻璃展示箱+原木墩組合</li><li>畫作懸掛</li></ul></div>
+        <div class="ti"><span class="ti-ph">Week 6–8</span><h4>媒體就緒</h4><ul><li>蠟燭+香氛佈置</li><li>Vitality Bar 開放</li><li>燈光最終微調</li><li>媒體試拍邀請</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 12 BIGGER PICTURE -->
+  <div class="slide" id="s12">
+    <div class="w">
+      <div class="eye">The Bigger Picture</div>
+      <h2>這不是一個店，<br>是一個全球 IP 的起點</h2>
+      <div class="bar-l"></div>
+      <div class="col2" style="margin-top:28px;">
+        <div>
+          <p style="margin-bottom:18px;">霧峰這個空間，是整個 IP 的 <strong>flagship proof of concept</strong>。一旦場域成立，可以複製、授權、擴張的不只是店——是一套完整的品牌語言：</p>
+          <ul class="tl">
+            <li>Antrodia Wellness Club — 台北、東京、紐約</li>
+            <li>Speakeasy 授權模式給五星酒店 wellness 樓層</li>
+            <li>牛樟芝作為全球 Biohacking 社群的指定功能性食材</li>
+            <li>「台灣原生 Longevity 哲學」成為可輸出的文化 IP</li>
+          </ul>
+        </div>
+        <div>
+          <div class="vbox" style="margin-bottom:18px;">
+            <p style="font-style:italic;">"Matcha 花了 15 年走出日本。<br>牛樟芝只需要一個<strong>對的場域</strong>，<br>讓全世界看見它的故事。"</p>
+          </div>
+          <div class="card-dk">
+            <div class="eye" style="font-size:9px; margin-bottom:12px;">Why Now</div>
+            <ul style="list-style:none;">
+              <li style="color:rgba(239,234,211,.7); font-size:12px; padding:6px 0; border-bottom:1px solid rgba(239,234,211,.08); display:flex; gap:10px;"><span style="color:var(--orange);">→</span>Longevity 成為全球最熱投資主題</li>
+              <li style="color:rgba(239,234,211,.7); font-size:12px; padding:6px 0; border-bottom:1px solid rgba(239,234,211,.08); display:flex; gap:10px;"><span style="color:var(--orange);">→</span>台灣 Soft Power 在全球歷史高點</li>
+              <li style="color:rgba(239,234,211,.7); font-size:12px; padding:6px 0; border-bottom:1px solid rgba(239,234,211,.08); display:flex; gap:10px;"><span style="color:var(--orange);">→</span>競爭者無法在 20 年內複製原材料</li>
+              <li style="color:rgba(239,234,211,.7); font-size:12px; padding:6px 0; display:flex; gap:10px;"><span style="color:var(--orange);">→</span>空間已建好，只需 NT$300,000 啟動</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 13 CLOSE — FIXED 5R -->
+  <div class="slide" id="s13">
+    <div class="w" style="text-align:center;">
+      <div class="eye">Our Design Philosophy</div>
+      <h2 style="font-size:clamp(22px,2.8vw,36px);">
+        Health is the new Wealth.<br>
+        Wellness is the new Luxury.<br>
+        TCM is the new Chic.
+      </h2>
+      <div class="bar"></div>
+      <div class="philosophy-grid">
+        <div class="ph-item">
+          <span class="ph-num">01</span>
+          <span class="ph-en">Rebirth</span>
+          <span class="ph-zh">再生命</span>
+          <span class="ph-desc">木化石與老木頭獲得新的藝術生命</span>
+        </div>
+        <div class="ph-item">
+          <span class="ph-num">02</span>
+          <span class="ph-en">Reuse</span>
+          <span class="ph-zh">再利用</span>
+          <span class="ph-desc">不購置新材料，全採現有自然原件</span>
+        </div>
+        <div class="ph-item">
+          <span class="ph-num">03</span>
+          <span class="ph-en">Ritual</span>
+          <span class="ph-zh">儀式感</span>
+          <span class="ph-desc">把自然物件轉化為療癒器物</span>
+        </div>
+        <div class="ph-item">
+          <span class="ph-num">04</span>
+          <span class="ph-en">Raw Beauty</span>
+          <span class="ph-zh">原生之美</span>
+          <span class="ph-desc">保留材質原貌，非 fake luxury</span>
+        </div>
+        <div class="ph-item">
+          <span class="ph-num">05</span>
+          <span class="ph-en">Regenerative</span>
+          <span class="ph-zh">再生設計</span>
+          <span class="ph-desc">空間本身即示範台灣的再生哲學</span>
+        </div>
+      </div>
+      <div style="margin-top:40px; font:500 10px/1 'Work Sans',sans-serif; letter-spacing:4px; text-transform:uppercase; color:rgba(239,234,211,.4);">Contact</div>
+      <div style="margin-top:8px; font:300 15px/1 'Work Sans',sans-serif; letter-spacing:2px; color:rgba(239,234,211,.7);">wecare@twyoucan.com</div>
+    </div>
+  </div>
+
+</div><!-- /deck -->
+
+<div class="snum" id="snum">01 / 13</div>
+<div class="nav">
+  <button class="nbtn" onclick="go(cur-1)">← Prev</button>
+  <div id="dots"></div>
+  <button class="nbtn" onclick="go(cur+1)">Next →</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let cur = 0;
+
+  function buildDots() {
+    const c = document.getElementById('dots');
+    slides.forEach((_,i) => {
+      const d = document.createElement('div');
+      d.className = 'dot' + (i===0 ? ' on' : '');
+      d.onclick = () => go(i);
+      c.appendChild(d);
+    });
+  }
+
+  function go(n) {
+    slides[cur].classList.remove('active');
+    document.querySelectorAll('.dot')[cur].classList.remove('on');
+    cur = Math.max(0, Math.min(n, slides.length-1));
+    slides[cur].classList.add('active');
+    document.querySelectorAll('.dot')[cur].classList.add('on');
+    document.getElementById('snum').textContent =
+      String(cur+1).padStart(2,'0') + ' / ' + String(slides.length).padStart(2,'0');
+  }
+
+  document.addEventListener('keydown', e => {
+    if (['ArrowRight','ArrowDown',' '].includes(e.key)) { e.preventDefault(); go(cur+1); }
+    if (['ArrowLeft','ArrowUp'].includes(e.key)) { e.preventDefault(); go(cur-1); }
+  });
+  document.getElementById('deck').addEventListener('click', e => {
+    if (!e.target.closest('.nav')) go(cur+1);
+  });
+
+  /* touch swipe */
+  let tx = 0;
+  document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 48) go(cur + (dx < 0 ? 1 : -1));
+  });
+
+  buildDots();
+</script>
+</body>
+</html>
