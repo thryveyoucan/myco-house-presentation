@@ -254,11 +254,15 @@
 
     /* S2 macro wave — stats in 2-col mini grid */
     #s2 .col2 > div:first-child {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 12px 16px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px;
     }
     #s2 .col2 > div:first-child > div:last-child { grid-column: 1 / -1; }
-    #s2 .big { font-size: clamp(24px, 7vw, 34px); margin-bottom: 3px; }
-    #s2 .sub { font-size: 8px; }
+    #s2 .col2 > div:first-child > div { margin-bottom: 0 !important; }
+    #s2 .big { font-size: clamp(22px, 6.5vw, 30px); margin-bottom: 2px; }
+    #s2 .sub { font-size: 7px; letter-spacing: 1px; line-height: 1.4; }
+    #s2 p { font-size: 13px; line-height: 1.7; margin-bottom: 12px !important; }
+    #s2 .tl li { font-size: 12px; line-height: 1.55; padding: 6px 0; }
+    #s2 .vbox p { font-size: 12px; line-height: 1.65; }
 
     /* S4 unfair advantage — dark card stats side by side */
     #s4 .card-dk {
